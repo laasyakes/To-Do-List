@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin: 0;
+  min-width: 250px;
+  background-color: #F7F7F7;
+}
+
+/* Include the padding and border in an element's total width and height */
+* {
+  box-sizing: border-box;
+}
+
+/* Remove margins and padding from the list */
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the list items */
+ul li {
+  cursor: pointer;
+  position: relative;
+  padding: 16px 20px; /* Increased padding for better readability */
+  padding-left: 40px; /* Added padding-left for space between checkboxes and text */
+  list-style-type: none;
+  background: #FAFAFA;
+  font-size: 18px;
+  transition: 0.2s;
+
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Set all odd list items to a different color (zebra-stripes) */
+ul li:nth-child(odd) {
+  background:  #F2F2F2;
+}
+
+/* Darker background-color on hover */
+ul li:hover {
+  background: #EAEAEA;
+}
+
+/* When clicked on, add a background color and strike out text */
+ul li.checked {
+  background:  #EAEAEA;
+  color: #B0B0B0;
+  text-decoration: line-through;
+}
+
+/* Add a "checked" mark when clicked on */
+ul li.checked .checkmark {
+  background-color:  #737373;
+  border-color: #fff;
+}
+
+/* Style the checkboxes */
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 20px; /* Adjusted position of the checkboxes */
+  height: 24px; /* Increased height of the checkboxes */
+  width: 24px; /* Increased width of the checkboxes */
+  background-color: #FAFAFA;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  transform: translate(-50%, -50%);
+}
+
+/* Style the close button */
+.close {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+  color: #888888;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #555555;
+}
+
+/* Style the header */
+.header {
+  background-color:  #333333;
+  padding: 30px 40px;
+  color: white;
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  font-size: 28px;
+}
+
+/* Clear floats after the header */
+.header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the input */
+.input-container {
+  margin-right: 20px;
+  float: left;
+  width: 75%;
+}
+
+.input-container input {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* Style the "Add" button */
+.addBtn {
+  padding: 10px;
+  height: 48px; /* Increased height of the button for better clickability */
+  width: 48px; /* Fixed width for a square button */
+  background: #4CAF50;
+  color: #ffffff;
+  float: left;
+  text-align: center;
+  font-size: 24px;
+  line-height: 24px; /* Centering the plus sign vertically */
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 50%; /* Make the button circular */
+}
+
+.addBtn:hover {
+  background-color: #45A849;
+}
+
+/* Style the section headings */
+.section-heading {
+  background-color:  #333333;
+  padding: 10px;
+  color: white;
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  font-size: 24px;
+}
+</style>
+</head>
+<body>
+
+<div id="myDIV" class="header">
+  <h2 style="margin:5px;font-family: 'Pacifico', cursive;">To-Do List</h2>
+  <div class="input-container">
+    <input type="text" id="myInput" placeholder="Add Something New To The List">
+  </div>
+  <span onclick="newElement()" class="addBtn">+</span>
+</div>
+
+<h2 class="section-heading">In Progress</h2>
+<ul id="inProgressList">
+  <li><span class="checkmark"></span>Send an E-Mail to the Principal</li>
+  <li><span class="checkmark"></span>Go Shopping</li>
+  <li><span class="checkmark"></span>Complete Assignments</li>
+</ul>
+
+<h2 class="section-heading">Completion</h2>
+<ul id="completedList">
+  <li class="checked"><span class="checkmark"></span>Post on Instagram</li>
+  <li class="checked"><span class="checkmark"></span>Read 10 pages of the Book</li>
+  <li class="checked"><span class="checkmark"></span>Call a Friend</li>
+</ul>
+
+<script>
+// Create a "close" button and append it to each list item
+var inProgressList = document.getElementById("inProgressList");
+var completedList = document.getElementById("completedList");
+
+var inProgressItems = inProgressList.getElementsByTagName("LI");
+var completedItems = completedList.getElementsByTagName("LI");
+
+var i;
+
+for (i = 0; i < inProgressItems.length; i++) {
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  inProgressItems[i].appendChild(span);
+
+  // Show the close button when hovering over the list item
+  inProgressItems[i].addEventListener("mouseenter", function() {
+    this.querySelector(".close").style.display = "block";
+  });
+
+  // Hide the close button when the cursor leaves the list item
+  inProgressItems[i].addEventListener("mouseleave", function() {
+    this.querySelector(".close").style.display = "none";
+  });
+}
+
+for (i = 0; i < completedItems.length; i++) {
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  completedItems[i].appendChild(span);
+
+  // Show the close button when hovering over the list item
+  completedItems[i].addEventListener("mouseenter", function() {
+    this.querySelector(".close").style.display = "block";
+  });
+
+  // Hide the close button when the cursor leaves the list item
+  completedItems[i].addEventListener("mouseleave", function() {
+    this.querySelector(".close").style.display = "none";
+  });
+}
+
+// Click on a close button to hide the current list item
+var close = document.getElementsByClassName("close");
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function() {
+    var div = this.parentElement;
+    div.style.display = "none";
+  };
+}
+
+// Move a checked item to the end of the list
+function moveCheckedItemToEnd(item) {
+  var list = item.parentElement;
+  if (list === inProgressList) {
+    completedList.appendChild(item);
+  } else if (list === completedList) {
+    inProgressList.appendChild(item);
+  }
+}
+
+// Toggle the checkbox and update the class when clicking on a list item
+inProgressList.addEventListener("click", function(ev) {
+  if (ev.target.tagName === "LI") {
+    ev.target.classList.toggle("checked");
+    ev.target.querySelector(".checkmark").classList.toggle("checked");
+    moveCheckedItemToEnd(ev.target);
+  }
+}, false);
+
+completedList.addEventListener("click", function(ev) {
+  if (ev.target.tagName === "LI") {
+    ev.target.classList.toggle("checked");
+    ev.target.querySelector(".checkmark").classList.toggle("checked");
+    moveCheckedItemToEnd(ev.target);
+  }
+}, false);
+
+// Create a new list item when clicking on the "Add" button
+function newElement() {
+  var li = document.createElement("li");
+  var inputValue = document.getElementById("myInput").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === "") {
+    alert("You must write something!");
+  } else {
+    var checkmark = document.createElement("SPAN");
+    checkmark.className = "checkmark";
+    li.appendChild(checkmark);
+    inProgressList.appendChild(li);
+  }
+  document.getElementById("myInput").value = "";
+
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  li.appendChild(span);
+
+  close = document.getElementsByClassName("close");
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function() {
+      var div = this.parentElement;
+      div.style.display = "none";
+    };
+  }
+}
+</script>
+
+</body>
+</html>
